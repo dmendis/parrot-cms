@@ -1,20 +1,25 @@
 // @ts-check
-import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-    eslint.configs.recommended,
-    ...tseslint.configs.recommended,
+    ...tseslint.configs.stylisticTypeChecked,
+    {
+        extends: tseslint.configs.recommendedTypeChecked,
+        rules: {
+            semi: ['error', 'always'],
+            quotes: [2, 'single', { 
+                avoidEscape: true,
+                allowTemplateLiterals: true
+            }]
+        }
+    },
     {
         languageOptions: {
             parserOptions: {
                 project: true,
+                tsconfigRootDir: import.meta.dirname,
             },
         },
-    },
-    {
-        files: ['*.ts'],
-        ...tseslint.configs.disableTypeChecked,
     },
     {
         ignores: ['dist/*']
